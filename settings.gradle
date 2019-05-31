@@ -1,3 +1,10 @@
+pluginManagement {
+  repositories {
+    mavenLocal()
+    gradlePluginPortal()
+  }
+}
+
 include ':mockwebserver'
 include ':okcurl'
 include ':okhttp'

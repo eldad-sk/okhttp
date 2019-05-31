@@ -45,6 +45,7 @@ buildscript {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
     classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.18"
     classpath 'com.diffplug.spotless:spotless-plugin-gradle:3.21.1'
+    classpath 'me.champeau.gradle:japicmp-gradle-plugin:0.2.9'
   }
 
   repositories {
@@ -56,8 +57,9 @@ buildscript {
 plugins {
   id 'ru.vyarus.animalsniffer' version '1.5.0'
   id 'com.github.johnrengelman.shadow' version '4.0.1'
-  id 'me.champeau.gradle.japicmp' version '0.2.6'
 }
+
+apply plugin: 'me.champeau.gradle.japicmp'
 
 allprojects {
   group = GROUP
