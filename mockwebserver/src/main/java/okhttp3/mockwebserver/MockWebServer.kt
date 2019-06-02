@@ -201,7 +201,7 @@ class MockWebServer : ExternalResource(), Closeable {
   @Deprecated(
       message = "moved to val",
       replaceWith = ReplaceWith(expression = "port"),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun getPort(): Int = port
 
   fun toProxyAddress(): Proxy {
@@ -216,7 +216,7 @@ class MockWebServer : ExternalResource(), Closeable {
       replaceWith = ReplaceWith(
           expression = "run { this.serverSocketFactory = serverSocketFactory }"
       ),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun setServerSocketFactory(serverSocketFactory: ServerSocketFactory) = run {
     this.serverSocketFactory = serverSocketFactory
   }
@@ -241,7 +241,7 @@ class MockWebServer : ExternalResource(), Closeable {
       replaceWith = ReplaceWith(
           expression = "run { this.bodyLimit = bodyLimit }"
       ),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun setBodyLimit(bodyLimit: Long) = run { this.bodyLimit = bodyLimit }
 
   @JvmName("-deprecated_protocolNegotiationEnabled")
@@ -250,7 +250,7 @@ class MockWebServer : ExternalResource(), Closeable {
       replaceWith = ReplaceWith(
           expression = "run { this.protocolNegotiationEnabled = protocolNegotiationEnabled }"
       ),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun setProtocolNegotiationEnabled(protocolNegotiationEnabled: Boolean) = run {
     this.protocolNegotiationEnabled = protocolNegotiationEnabled
   }
@@ -259,14 +259,14 @@ class MockWebServer : ExternalResource(), Closeable {
   @Deprecated(
       message = "moved to var",
       replaceWith = ReplaceWith(expression = "run { this.protocols = protocols }"),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun setProtocols(protocols: List<Protocol>) = run { this.protocols = protocols }
 
   @JvmName("-deprecated_protocols")
   @Deprecated(
       message = "moved to var",
       replaceWith = ReplaceWith(expression = "protocols"),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun protocols(): List<Protocol> = protocols
 
   /**
@@ -335,7 +335,7 @@ class MockWebServer : ExternalResource(), Closeable {
   @Deprecated(
       message = "moved to val",
       replaceWith = ReplaceWith(expression = "requestCount"),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun getRequestCount(): Int = requestCount
 
   /**

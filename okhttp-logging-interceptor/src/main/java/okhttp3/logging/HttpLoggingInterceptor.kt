@@ -112,8 +112,8 @@ class HttpLoggingInterceptor @JvmOverloads constructor(
       @JvmName("-deprecated_Logger")
       @Deprecated(
           message = "No SAM (single-abstract-method) conversions for Kotlin declarations",
-          level = DeprecationLevel.WARNING)
-      operator fun invoke(block: (message: String) -> Unit): Logger = object : Logger {
+          level = DeprecationLevel.ERROR)
+      fun invoke(block: (message: String) -> Unit): Logger = object : Logger {
         override fun log(message: String) = block(message)
       }
 
@@ -146,7 +146,7 @@ class HttpLoggingInterceptor @JvmOverloads constructor(
   @Deprecated(
       message = "moved to var",
       replaceWith = ReplaceWith(expression = "level"),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun getLevel(): Level = level
 
   @Throws(IOException::class)

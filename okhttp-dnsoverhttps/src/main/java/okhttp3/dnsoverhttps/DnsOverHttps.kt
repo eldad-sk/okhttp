@@ -66,28 +66,28 @@ class DnsOverHttps internal constructor(
   @Deprecated(
       message = "moved to val",
       replaceWith = ReplaceWith(expression = "url"),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun url(): HttpUrl = url
 
   @JvmName("-deprecated_post")
   @Deprecated(
       message = "moved to val",
       replaceWith = ReplaceWith(expression = "post"),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun post(): Boolean = post
 
   @JvmName("-deprecated_includeIPv6")
   @Deprecated(
       message = "moved to val",
       replaceWith = ReplaceWith(expression = "includeIPv6"),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun includeIPv6(): Boolean = includeIPv6
 
   @JvmName("-deprecated_client")
   @Deprecated(
       message = "moved to val",
       replaceWith = ReplaceWith(expression = "client"),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun client(): OkHttpClient = client.newBuilder()
           .dns(buildBootstrapClient(bootstrapDnsHosts, url, systemDns))
           .build()
@@ -96,14 +96,14 @@ class DnsOverHttps internal constructor(
   @Deprecated(
       message = "moved to val",
       replaceWith = ReplaceWith(expression = "resolvePrivateAddresses"),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun resolvePrivateAddresses(): Boolean = resolvePrivateAddresses
 
   @JvmName("-deprecated_resolvePublicAddresses")
   @Deprecated(
       message = "moved to val",
       replaceWith = ReplaceWith(expression = "resolvePublicAddresses"),
-      level = DeprecationLevel.WARNING)
+      level = DeprecationLevel.ERROR)
   fun resolvePublicAddresses(): Boolean = resolvePublicAddresses
 
   @Throws(UnknownHostException::class)

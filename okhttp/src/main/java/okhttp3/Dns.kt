@@ -57,8 +57,8 @@ interface Dns {
     @JvmName("-deprecated_Dns")
     @Deprecated(
         message = "No SAM (single-abstract-method) conversions for Kotlin declarations",
-        level = DeprecationLevel.WARNING)
-    operator fun invoke(block: (String) -> List<InetAddress>): Dns = object : Dns {
+        level = DeprecationLevel.ERROR)
+    fun invoke(block: (String) -> List<InetAddress>): Dns = object : Dns {
       override fun lookup(hostname: String): List<InetAddress> = block(hostname)
     }
   }

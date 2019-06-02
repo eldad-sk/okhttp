@@ -351,8 +351,8 @@ abstract class EventListener {
       @JvmName("-deprecated_Factory")
       @Deprecated(
           message = "No SAM (single-abstract-method) conversions for Kotlin declarations",
-          level = DeprecationLevel.WARNING)
-      operator fun invoke(block: (call: Call) -> EventListener): Factory = object : Factory {
+          level = DeprecationLevel.ERROR)
+      fun invoke(block: (call: Call) -> EventListener): Factory = object : Factory {
         override fun create(call: Call) = block(call)
       }
     }
