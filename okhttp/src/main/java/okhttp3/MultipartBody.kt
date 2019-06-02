@@ -49,34 +49,6 @@ class MultipartBody internal constructor(
   /** A combination of [type] and [boundaryByteString]. */
   override fun contentType(): MediaType = contentType
 
-  @JvmName("-deprecated_type")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "type"),
-      level = DeprecationLevel.ERROR)
-  fun type(): MediaType = type
-
-  @JvmName("-deprecated_boundary")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "boundary"),
-      level = DeprecationLevel.ERROR)
-  fun boundary(): String = boundary
-
-  @JvmName("-deprecated_size")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "size"),
-      level = DeprecationLevel.ERROR)
-  fun size(): Int = size
-
-  @JvmName("-deprecated_parts")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "parts"),
-      level = DeprecationLevel.ERROR)
-  fun parts(): List<Part> = parts
-
   @Throws(IOException::class)
   override fun contentLength(): Long {
     var result = contentLength
@@ -176,20 +148,6 @@ class MultipartBody internal constructor(
     @get:JvmName("headers") val headers: Headers?,
     @get:JvmName("body") val body: RequestBody
   ) {
-
-    @JvmName("-deprecated_headers")
-    @Deprecated(
-        message = "moved to val",
-        replaceWith = ReplaceWith(expression = "headers"),
-        level = DeprecationLevel.ERROR)
-    fun headers(): Headers? = headers
-
-    @JvmName("-deprecated_body")
-    @Deprecated(
-        message = "moved to val",
-        replaceWith = ReplaceWith(expression = "body"),
-        level = DeprecationLevel.ERROR)
-    fun body(): RequestBody = body
 
     companion object {
       @JvmStatic

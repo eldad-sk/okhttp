@@ -23,33 +23,4 @@ class PushPromise(
   @get:JvmName("path") val path: String,
   @get:JvmName("headers") val headers: Headers,
   @get:JvmName("response") val response: MockResponse
-) {
-
-  @JvmName("-deprecated_method")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "method"),
-      level = DeprecationLevel.ERROR)
-  fun method() = method
-
-  @JvmName("-deprecated_path")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "path"),
-      level = DeprecationLevel.ERROR)
-  fun path() = path
-
-  @JvmName("-deprecated_headers")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "headers"),
-      level = DeprecationLevel.ERROR)
-  fun headers() = headers
-
-  @JvmName("-deprecated_response")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "response"),
-      level = DeprecationLevel.ERROR)
-  fun response() = response
-}
+)

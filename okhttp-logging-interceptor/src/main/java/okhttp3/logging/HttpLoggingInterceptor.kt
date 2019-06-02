@@ -109,14 +109,6 @@ class HttpLoggingInterceptor @JvmOverloads constructor(
     fun log(message: String)
 
     companion object {
-      @JvmName("-deprecated_Logger")
-      @Deprecated(
-          message = "No SAM (single-abstract-method) conversions for Kotlin declarations",
-          level = DeprecationLevel.ERROR)
-      fun invoke(block: (message: String) -> Unit): Logger = object : Logger {
-        override fun log(message: String) = block(message)
-      }
-
       /** A [Logger] defaults output appropriate for the current platform. */
       @JvmField
       val DEFAULT: Logger = object : Logger {
@@ -141,13 +133,6 @@ class HttpLoggingInterceptor @JvmOverloads constructor(
   fun setLevel(level: Level) = apply {
     this.level = level
   }
-
-  @JvmName("-deprecated_level")
-  @Deprecated(
-      message = "moved to var",
-      replaceWith = ReplaceWith(expression = "level"),
-      level = DeprecationLevel.ERROR)
-  fun getLevel(): Level = level
 
   @Throws(IOException::class)
   override fun intercept(chain: Interceptor.Chain): Response {

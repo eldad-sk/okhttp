@@ -64,14 +64,6 @@ class RecordedRequest(
   val handshake: Handshake?
   val requestUrl: HttpUrl?
 
-  @get:JvmName("-deprecated_utf8Body")
-  @Deprecated(
-      message = "Use body.readUtf8()",
-      replaceWith = ReplaceWith("body.readUtf8()"),
-      level = DeprecationLevel.ERROR)
-  val utf8Body: String
-    get() = body.readUtf8()
-
   /** Returns the connection's TLS version or null if the connection doesn't use SSL. */
   val tlsVersion: TlsVersion?
     get() = handshake?.tlsVersion

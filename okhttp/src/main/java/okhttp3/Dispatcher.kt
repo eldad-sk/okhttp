@@ -227,19 +227,4 @@ class Dispatcher constructor() {
   @Synchronized fun queuedCallsCount(): Int = readyAsyncCalls.size
 
   @Synchronized fun runningCallsCount(): Int = runningAsyncCalls.size + runningSyncCalls.size
-
-  @JvmName("-deprecated_executorService")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "executorService"),
-      level = DeprecationLevel.ERROR)
-  fun executorService(): ExecutorService = executorService
-
-  @JvmName("-deprecated_setIdleCallback")
-  @Deprecated(
-      message = "No SAM (single-abstract-method) conversions for Kotlin declarations",
-      level = DeprecationLevel.ERROR)
-  fun setIdleCallback(idleCallback: () -> Unit) = run {
-    this.idleCallback = Runnable { idleCallback() }
-  }
 }

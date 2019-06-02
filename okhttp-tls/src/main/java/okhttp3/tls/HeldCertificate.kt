@@ -116,20 +116,6 @@ class HeldCertificate(
   @get:JvmName("certificate") val certificate: X509Certificate
 ) {
 
-  @JvmName("-deprecated_certificate")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "certificate"),
-      level = DeprecationLevel.ERROR)
-  fun certificate(): X509Certificate = certificate
-
-  @JvmName("-deprecated_keyPair")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "keyPair"),
-      level = DeprecationLevel.ERROR)
-  fun keyPair(): KeyPair = keyPair
-
   /**
    * Returns the certificate encoded in [PEM format][rfc_7468].
    *

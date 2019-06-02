@@ -27,16 +27,6 @@ interface Interceptor {
   @Throws(IOException::class)
   fun intercept(chain: Chain): Response
 
-  companion object {
-    @JvmName("-deprecated_Interceptor")
-    @Deprecated(
-        message = "No SAM (single-abstract-method) conversions for Kotlin declarations",
-        level = DeprecationLevel.ERROR)
-    fun invoke(block: (chain: Chain) -> Response): Interceptor = object : Interceptor {
-      override fun intercept(chain: Chain) = block(chain)
-    }
-  }
-
   interface Chain {
     fun request(): Request
 

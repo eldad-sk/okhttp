@@ -15,6 +15,13 @@
  */
 package okhttp3
 
+import okhttp3.Handshake.Companion.handshake
+import okhttp3.Headers.Companion.headersOf
+import okhttp3.Headers.Companion.toHeaders
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.internal.http2.Settings
 import okhttp3.internal.proxy.NullProxySelector
 import okhttp3.logging.HttpLoggingInterceptor
@@ -90,17 +97,17 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun address() {
     val address: Address = newAddress()
-    val url: HttpUrl = address.url()
-    val dns: Dns = address.dns()
-    val socketFactory: SocketFactory = address.socketFactory()
-    val proxyAuthenticator: Authenticator = address.proxyAuthenticator()
-    val protocols: List<Protocol> = address.protocols()
-    val connectionSpecs: List<ConnectionSpec> = address.connectionSpecs()
-    val proxySelector: ProxySelector = address.proxySelector()
-    val proxy: Proxy? = address.proxy()
-    val sslSocketFactory: SSLSocketFactory? = address.sslSocketFactory()
-    val hostnameVerifier: HostnameVerifier? = address.hostnameVerifier()
-    val certificatePinner: CertificatePinner? = address.certificatePinner()
+    val url: HttpUrl = address.url
+    val dns: Dns = address.dns
+    val socketFactory: SocketFactory = address.socketFactory
+    val proxyAuthenticator: Authenticator = address.proxyAuthenticator
+    val protocols: List<Protocol> = address.protocols
+    val connectionSpecs: List<ConnectionSpec> = address.connectionSpecs
+    val proxySelector: ProxySelector = address.proxySelector
+    val proxy: Proxy? = address.proxy
+    val sslSocketFactory: SSLSocketFactory? = address.sslSocketFactory
+    val hostnameVerifier: HostnameVerifier? = address.hostnameVerifier
+    val certificatePinner: CertificatePinner? = address.certificatePinner
   }
 
   @Test @Ignore
@@ -108,7 +115,6 @@ class KotlinSourceCompatibilityTest {
     var authenticator: Authenticator = object : Authenticator {
       override fun authenticate(route: Route?, response: Response): Request? = TODO()
     }
-    authenticator = Authenticator { route: Route?, response: Response -> TODO() }
   }
 
   @Test @Ignore
@@ -124,7 +130,7 @@ class KotlinSourceCompatibilityTest {
     val maxSize: Long = cache.maxSize()
     cache.flush()
     cache.close()
-    val directory: File = cache.directory()
+    val directory: File = cache.directory
     val networkCount: Int = cache.networkCount()
     val hitCount: Int = cache.hitCount()
     val requestCount: Int = cache.requestCount()
@@ -133,19 +139,19 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun cacheControl() {
     val cacheControl: CacheControl = CacheControl.Builder().build()
-    val noCache: Boolean = cacheControl.noCache()
-    val noStore: Boolean = cacheControl.noStore()
-    val maxAgeSeconds: Int = cacheControl.maxAgeSeconds()
-    val sMaxAgeSeconds: Int = cacheControl.sMaxAgeSeconds()
-    val mustRevalidate: Boolean = cacheControl.mustRevalidate()
-    val maxStaleSeconds: Int = cacheControl.maxStaleSeconds()
-    val minFreshSeconds: Int = cacheControl.minFreshSeconds()
-    val onlyIfCached: Boolean = cacheControl.onlyIfCached()
-    val noTransform: Boolean = cacheControl.noTransform()
-    val immutable: Boolean = cacheControl.immutable()
+    val noCache: Boolean = cacheControl.noCache
+    val noStore: Boolean = cacheControl.noStore
+    val maxAgeSeconds: Int = cacheControl.maxAgeSeconds
+    val sMaxAgeSeconds: Int = cacheControl.sMaxAgeSeconds
+    val mustRevalidate: Boolean = cacheControl.mustRevalidate
+    val maxStaleSeconds: Int = cacheControl.maxStaleSeconds
+    val minFreshSeconds: Int = cacheControl.minFreshSeconds
+    val onlyIfCached: Boolean = cacheControl.onlyIfCached
+    val noTransform: Boolean = cacheControl.noTransform
+    val immutable: Boolean = cacheControl.immutable
     val forceCache: CacheControl = CacheControl.FORCE_CACHE
     val forceNetwork: CacheControl = CacheControl.FORCE_NETWORK
-    val parse: CacheControl = CacheControl.parse(Headers.of())
+    val parse: CacheControl = CacheControl.parse(headersOf())
   }
 
   @Test @Ignore
@@ -178,7 +184,7 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun certificatePinner() {
     val heldCertificate: HeldCertificate = HeldCertificate.Builder().build()
-    val certificate: X509Certificate = heldCertificate.certificate()
+    val certificate: X509Certificate = heldCertificate.certificate
     val certificatePinner: CertificatePinner = CertificatePinner.Builder().build()
     val certificates: List<Certificate> = listOf()
     certificatePinner.check("", listOf(certificate))
@@ -197,10 +203,10 @@ class KotlinSourceCompatibilityTest {
   fun challenge() {
     var challenge = Challenge("", mapOf<String?, String>("" to ""))
     challenge = Challenge("", "")
-    val scheme: String = challenge.scheme()
-    val authParams: Map<String?, String> = challenge.authParams()
-    val realm: String? = challenge.realm()
-    val charset: Charset = challenge.charset()
+    val scheme: String = challenge.scheme
+    val authParams: Map<String?, String> = challenge.authParams
+    val realm: String? = challenge.realm
+    val charset: Charset = challenge.charset
     val utf8: Challenge = challenge.withCharset(Charsets.UTF_8)
   }
 
@@ -208,7 +214,7 @@ class KotlinSourceCompatibilityTest {
   fun cipherSuite() {
     var cipherSuite: CipherSuite = CipherSuite.TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
     cipherSuite = CipherSuite.forJavaName("")
-    val javaName: String = cipherSuite.javaName()
+    val javaName: String = cipherSuite.javaName
   }
 
   @Test @Ignore
@@ -236,9 +242,9 @@ class KotlinSourceCompatibilityTest {
     connectionSpec = ConnectionSpec.MODERN_TLS
     connectionSpec = ConnectionSpec.COMPATIBLE_TLS
     connectionSpec = ConnectionSpec.CLEARTEXT
-    val tlsVersions: List<TlsVersion>? = connectionSpec.tlsVersions()
-    val cipherSuites: List<CipherSuite>? = connectionSpec.cipherSuites()
-    val supportsTlsExtensions: Boolean = connectionSpec.supportsTlsExtensions()
+    val tlsVersions: List<TlsVersion>? = connectionSpec.tlsVersions
+    val cipherSuites: List<CipherSuite>? = connectionSpec.cipherSuites
+    val supportsTlsExtensions: Boolean = connectionSpec.supportsTlsExtensions
     val compatible: Boolean = connectionSpec.isCompatible(
         localhost().sslSocketFactory().createSocket() as SSLSocket)
   }
@@ -259,18 +265,18 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun cookie() {
     val cookie: Cookie = Cookie.Builder().build()
-    val name: String = cookie.name()
-    val value: String = cookie.value()
-    val persistent: Boolean = cookie.persistent()
-    val expiresAt: Long = cookie.expiresAt()
-    val hostOnly: Boolean = cookie.hostOnly()
-    val domain: String = cookie.domain()
-    val path: String = cookie.path()
-    val httpOnly: Boolean = cookie.httpOnly()
-    val secure: Boolean = cookie.secure()
-    val matches: Boolean = cookie.matches(HttpUrl.get(""))
-    val parsedCookie: Cookie? = Cookie.parse(HttpUrl.get(""), "")
-    val cookies: List<Cookie> = Cookie.parseAll(HttpUrl.get(""), Headers.of())
+    val name: String = cookie.name
+    val value: String = cookie.value
+    val persistent: Boolean = cookie.persistent
+    val expiresAt: Long = cookie.expiresAt
+    val hostOnly: Boolean = cookie.hostOnly
+    val domain: String = cookie.domain
+    val path: String = cookie.path
+    val httpOnly: Boolean = cookie.httpOnly
+    val secure: Boolean = cookie.secure
+    val matches: Boolean = cookie.matches("".toHttpUrl())
+    val parsedCookie: Cookie? = Cookie.parse("".toHttpUrl(), "")
+    val cookies: List<Cookie> = Cookie.parseAll("".toHttpUrl(), headersOf())
   }
 
   @Test @Ignore
@@ -308,8 +314,7 @@ class KotlinSourceCompatibilityTest {
     dispatcher.maxRequests = 0
     val maxRequestsPerHost: Int = dispatcher.maxRequestsPerHost
     dispatcher.maxRequestsPerHost = 0
-    val executorService: ExecutorService = dispatcher.executorService()
-    dispatcher.setIdleCallback { TODO() }
+    val executorService: ExecutorService = dispatcher.executorService
     dispatcher.idleCallback = object : Runnable {
       override fun run() {
         TODO()
@@ -336,7 +341,6 @@ class KotlinSourceCompatibilityTest {
     var dns: Dns = object : Dns {
       override fun lookup(hostname: String): List<InetAddress> = TODO()
     }
-    dns = Dns { it: String -> TODO() }
 
     val system: Dns = Dns.SYSTEM
   }
@@ -398,13 +402,12 @@ class KotlinSourceCompatibilityTest {
     var builder: EventListener.Factory = object : EventListener.Factory {
       override fun create(call: Call): EventListener = TODO()
     }
-    builder = EventListener.Factory { it: Call -> TODO() }
   }
 
   @Test @Ignore
   fun formBody() {
     val formBody: FormBody = FormBody.Builder().build()
-    val size: Int = formBody.size()
+    val size: Int = formBody.size
     val encodedName: String = formBody.encodedName(0)
     val name: String = formBody.name(0)
     val encodedValue: String = formBody.encodedValue(0)
@@ -427,7 +430,7 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun handshake() {
     var handshake: Handshake =
-        Handshake.get((localhost().sslSocketFactory().createSocket() as SSLSocket).session)
+        (localhost().sslSocketFactory().createSocket() as SSLSocket).session.handshake()
     val listOfCertificates: List<Certificate> = listOf()
     handshake = Handshake.get(
         TlsVersion.TLS_1_3,
@@ -435,22 +438,22 @@ class KotlinSourceCompatibilityTest {
         listOfCertificates,
         listOfCertificates
     )
-    val tlsVersion: TlsVersion = handshake.tlsVersion()
-    val cipherSuite: CipherSuite = handshake.cipherSuite()
-    val peerCertificates: List<Certificate> = handshake.peerCertificates()
-    val peerPrincipal: Principal? = handshake.peerPrincipal()
-    val localCertificates: List<Certificate> = handshake.localCertificates()
-    val localPrincipal: Principal? = handshake.localPrincipal()
+    val tlsVersion: TlsVersion = handshake.tlsVersion
+    val cipherSuite: CipherSuite = handshake.cipherSuite
+    val peerCertificates: List<Certificate> = handshake.peerCertificates
+    val peerPrincipal: Principal? = handshake.peerPrincipal
+    val localCertificates: List<Certificate> = handshake.localCertificates
+    val localPrincipal: Principal? = handshake.localPrincipal
   }
 
   @Test @Ignore
   fun headers() {
-    var headers: Headers = Headers.of("", "")
-    headers = Headers.of(mapOf("" to ""))
+    var headers: Headers = headersOf("", "")
+    headers = mapOf("" to "").toHeaders()
     val get: String? = headers.get("")
     val date: Date? = headers.getDate("")
     val instant: Instant? = headers.getInstant("")
-    val size: Int = headers.size()
+    val size: Int = headers.size
     val name: String = headers.name(0)
     val value: String = headers.value(0)
     val names: Set<String> = headers.names()
@@ -466,7 +469,7 @@ class KotlinSourceCompatibilityTest {
     builder = builder.add("")
     builder = builder.add("", "")
     builder = builder.addUnsafeNonAscii("", "")
-    builder = builder.addAll(Headers.of())
+    builder = builder.addAll(headersOf())
     builder = builder.add("", Date(0L))
     builder = builder.add("", Instant.EPOCH)
     builder = builder.set("", "")
@@ -485,7 +488,7 @@ class KotlinSourceCompatibilityTest {
     interceptor.level = HttpLoggingInterceptor.Level.BASIC
     interceptor.setLevel(HttpLoggingInterceptor.Level.BASIC)
     var level: HttpLoggingInterceptor.Level = interceptor.level
-    level = interceptor.getLevel()
+    level = interceptor.level
     interceptor.intercept(newInterceptorChain())
   }
 
@@ -502,45 +505,44 @@ class KotlinSourceCompatibilityTest {
     var logger: HttpLoggingInterceptor.Logger = object : HttpLoggingInterceptor.Logger {
       override fun log(message: String) = TODO()
     }
-    logger = HttpLoggingInterceptor.Logger { TODO() }
     val default: HttpLoggingInterceptor.Logger = HttpLoggingInterceptor.Logger.DEFAULT
   }
 
   @Test @Ignore
   fun httpUrl() {
-    val httpUrl: HttpUrl = HttpUrl.get("")
+    val httpUrl: HttpUrl = "".toHttpUrl()
     val isHttps: Boolean = httpUrl.isHttps
-    val url: URL = httpUrl.url()
-    val uri: URI = httpUrl.uri()
-    val scheme: String = httpUrl.scheme()
-    val encodedUsername: String = httpUrl.encodedUsername()
-    val username: String = httpUrl.username()
-    val encodedPassword: String = httpUrl.encodedPassword()
-    val password: String = httpUrl.password()
-    val host: String = httpUrl.host()
-    val port: Int = httpUrl.port()
-    val pathSize: Int = httpUrl.pathSize()
-    val encodedPath: String = httpUrl.encodedPath()
-    val encodedPathSegments: List<String> = httpUrl.encodedPathSegments()
-    val pathSegments: List<String> = httpUrl.pathSegments()
-    val encodedQuery: String? = httpUrl.encodedQuery()
-    val query: String? = httpUrl.query()
-    val querySize: Int = httpUrl.querySize()
+    val url: URL = httpUrl.toUrl()
+    val uri: URI = httpUrl.toUri()
+    val scheme: String = httpUrl.scheme
+    val encodedUsername: String = httpUrl.encodedUsername
+    val username: String = httpUrl.username
+    val encodedPassword: String = httpUrl.encodedPassword
+    val password: String = httpUrl.password
+    val host: String = httpUrl.host
+    val port: Int = httpUrl.port
+    val pathSize: Int = httpUrl.pathSize
+    val encodedPath: String = httpUrl.encodedPath
+    val encodedPathSegments: List<String> = httpUrl.encodedPathSegments
+    val pathSegments: List<String> = httpUrl.pathSegments
+    val encodedQuery: String? = httpUrl.encodedQuery
+    val query: String? = httpUrl.query
+    val querySize: Int = httpUrl.querySize
     val queryParameter: String? = httpUrl.queryParameter("")
-    val queryParameterNames: Set<String> = httpUrl.queryParameterNames()
+    val queryParameterNames: Set<String> = httpUrl.queryParameterNames
     val queryParameterValues: List<String?> = httpUrl.queryParameterValues("")
     val queryParameterName: String = httpUrl.queryParameterName(0)
     val queryParameterValue: String? = httpUrl.queryParameterValue(0)
-    val encodedFragment: String? = httpUrl.encodedFragment()
-    val fragment: String? = httpUrl.fragment()
+    val encodedFragment: String? = httpUrl.encodedFragment
+    val fragment: String? = httpUrl.fragment
     val redact: String = httpUrl.redact()
     var builder: HttpUrl.Builder = httpUrl.newBuilder()
     var resolveBuilder: HttpUrl.Builder? = httpUrl.newBuilder("")
     val topPrivateDomain: String? = httpUrl.topPrivateDomain()
     val resolve: HttpUrl? = httpUrl.resolve("")
-    val getFromUrl: HttpUrl? = HttpUrl.get(URL(""))
-    val getFromUri: HttpUrl? = HttpUrl.get(URI(""))
-    val parse: HttpUrl? = HttpUrl.parse("")
+    val getFromUrl: HttpUrl? = URL("").toHttpUrlOrNull()
+    val getFromUri: HttpUrl? = URI("").toHttpUrlOrNull()
+    val parse: HttpUrl? = "".toHttpUrlOrNull()
     val defaultPort: Int = HttpUrl.defaultPort("")
   }
 
@@ -580,7 +582,6 @@ class KotlinSourceCompatibilityTest {
     var interceptor: Interceptor = object : Interceptor {
       override fun intercept(chain: Interceptor.Chain): Response = TODO()
     }
-    interceptor = Interceptor { it: Interceptor.Chain -> TODO() }
   }
 
   @Test @Ignore
@@ -591,8 +592,8 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun handshakeCertificates() {
     val handshakeCertificates = HandshakeCertificates.Builder().build()
-    val keyManager: X509KeyManager = handshakeCertificates.keyManager()
-    val trustManager: X509TrustManager = handshakeCertificates.trustManager()
+    val keyManager: X509KeyManager = handshakeCertificates.keyManager
+    val trustManager: X509TrustManager = handshakeCertificates.trustManager
     val sslSocketFactory: SSLSocketFactory = handshakeCertificates.sslSocketFactory()
     val sslContext: SSLContext = handshakeCertificates.sslContext()
   }
@@ -601,8 +602,8 @@ class KotlinSourceCompatibilityTest {
   fun handshakeCertificatesBuilder() {
     var builder: HandshakeCertificates.Builder = HandshakeCertificates.Builder()
     val heldCertificate = HeldCertificate.Builder().build()
-    builder = builder.heldCertificate(heldCertificate, heldCertificate.certificate())
-    builder = builder.addTrustedCertificate(heldCertificate.certificate())
+    builder = builder.heldCertificate(heldCertificate, heldCertificate.certificate)
+    builder = builder.addTrustedCertificate(heldCertificate.certificate)
     builder = builder.addPlatformTrustedCertificates()
     val handshakeCertificates: HandshakeCertificates = builder.build()
   }
@@ -610,8 +611,8 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun heldCertificate() {
     val heldCertificate: HeldCertificate = HeldCertificate.Builder().build()
-    val certificate: X509Certificate = heldCertificate.certificate()
-    val keyPair: KeyPair = heldCertificate.keyPair()
+    val certificate: X509Certificate = heldCertificate.certificate
+    val keyPair: KeyPair = heldCertificate.keyPair
     val certificatePem: String = heldCertificate.certificatePem()
     val privateKeyPkcs8Pem: String = heldCertificate.privateKeyPkcs8Pem()
     val privateKeyPkcs1Pem: String = heldCertificate.privateKeyPkcs1Pem()
@@ -648,7 +649,7 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun javaNetCookieJar() {
     val cookieJar: JavaNetCookieJar = JavaNetCookieJar(newCookieHandler())
-    val httpUrl = HttpUrl.get("")
+    val httpUrl = "".toHttpUrl()
     val loadForRequest: List<Cookie> = cookieJar.loadForRequest(httpUrl)
     cookieJar.saveFromResponse(httpUrl, listOf(Cookie.Builder().build()))
   }
@@ -670,45 +671,40 @@ class KotlinSourceCompatibilityTest {
 
   @Test @Ignore
   fun mediaType() {
-    val mediaType: MediaType = MediaType.get("")
+    val mediaType: MediaType = "".toMediaType()
     val defaultCharset: Charset? = mediaType.charset()
     val charset: Charset? = mediaType.charset(Charsets.UTF_8)
-    val type: String = mediaType.type()
-    val subtype: String = mediaType.subtype()
-    val parse: MediaType? = MediaType.parse("")
+    val type: String = mediaType.type
+    val subtype: String = mediaType.subtype
+    val parse: MediaType? = "".toMediaTypeOrNull()
   }
 
   @Test @Ignore
   fun mockResponse() {
     var mockResponse: MockResponse = MockResponse()
-    var status: String = mockResponse.getStatus()
-    status = mockResponse.status
+    var status: String = mockResponse.status
     mockResponse = mockResponse.setStatus("")
     mockResponse.status = ""
     mockResponse = mockResponse.setResponseCode(0)
-    var headers: Headers = mockResponse.getHeaders()
-    headers = mockResponse.headers
-    var trailers: Headers = mockResponse.getTrailers()
-    trailers = mockResponse.trailers
+    var headers: Headers = mockResponse.headers
+    var trailers: Headers = mockResponse.trailers
     mockResponse = mockResponse.clearHeaders()
     mockResponse = mockResponse.addHeader("")
     mockResponse = mockResponse.addHeader("", "")
     mockResponse = mockResponse.addHeaderLenient("", Any())
     mockResponse = mockResponse.setHeader("", Any())
-    mockResponse = mockResponse.setHeaders(Headers.of())
-    mockResponse.headers = Headers.of()
-    mockResponse = mockResponse.setTrailers(Headers.of())
-    mockResponse.trailers = Headers.of()
+    mockResponse = mockResponse.setHeaders(headersOf())
+    mockResponse.headers = headersOf()
+    mockResponse = mockResponse.setTrailers(headersOf())
+    mockResponse.trailers = headersOf()
     mockResponse = mockResponse.removeHeader("")
     var body: Buffer? = mockResponse.getBody()
     mockResponse = mockResponse.setBody(Buffer())
     mockResponse = mockResponse.setChunkedBody(Buffer(), 0)
     mockResponse = mockResponse.setChunkedBody("", 0)
-    var socketPolicy: SocketPolicy = mockResponse.getSocketPolicy()
-    socketPolicy = mockResponse.socketPolicy
+    var socketPolicy: SocketPolicy = mockResponse.socketPolicy
     mockResponse = mockResponse.setSocketPolicy(SocketPolicy.KEEP_OPEN)
-    var http2ErrorCode: Int = mockResponse.getHttp2ErrorCode()
-    http2ErrorCode = mockResponse.http2ErrorCode
+    var http2ErrorCode: Int = mockResponse.http2ErrorCode
     mockResponse = mockResponse.setHttp2ErrorCode(0)
     mockResponse.http2ErrorCode = 0
     mockResponse = mockResponse.throttleBody(0L, 0L, TimeUnit.SECONDS)
@@ -719,7 +715,7 @@ class KotlinSourceCompatibilityTest {
     val bodyDelay: Long = mockResponse.getBodyDelay(TimeUnit.SECONDS)
     mockResponse = mockResponse.setHeadersDelay(0L, TimeUnit.SECONDS)
     val headersDelay: Long = mockResponse.getHeadersDelay(TimeUnit.SECONDS)
-    mockResponse = mockResponse.withPush(PushPromise("", "", Headers.of(), MockResponse()))
+    mockResponse = mockResponse.withPush(PushPromise("", "", headersOf(), MockResponse()))
     var pushPromises: List<PushPromise> = mockResponse.pushPromises
     pushPromises = mockResponse.pushPromises
     mockResponse = mockResponse.withSettings(Settings())
@@ -734,24 +730,26 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun mockWebServer() {
     val mockWebServer: MockWebServer = MockWebServer()
-    var port: Int = mockWebServer.getPort()
-    port = mockWebServer.port
+    var port: Int = mockWebServer.port
     var hostName: String = mockWebServer.hostName
     val toProxyAddress: Proxy = mockWebServer.toProxyAddress()
-    mockWebServer.setServerSocketFactory(ServerSocketFactory.getDefault())
+    mockWebServer.run {
+      mockWebServer.serverSocketFactory = ServerSocketFactory.getDefault()
+    }
     val url: HttpUrl = mockWebServer.url("")
-    mockWebServer.setBodyLimit(0L)
-    mockWebServer.setProtocolNegotiationEnabled(false)
-    mockWebServer.setProtocols(listOf(Protocol.HTTP_1_1))
-    val protocols: List<Protocol> = mockWebServer.protocols()
+    mockWebServer.run { mockWebServer.bodyLimit = 0L }
+    mockWebServer.run {
+      mockWebServer.protocolNegotiationEnabled = false
+    }
+    mockWebServer.run { mockWebServer.protocols = listOf() }
+    val protocols: List<Protocol> = mockWebServer.protocols
     mockWebServer.useHttps(SSLSocketFactory.getDefault() as SSLSocketFactory, false)
     mockWebServer.noClientAuth()
     mockWebServer.requestClientAuth()
     mockWebServer.requireClientAuth()
     var request: RecordedRequest = mockWebServer.takeRequest()
     request = mockWebServer.takeRequest(0L, TimeUnit.SECONDS)
-    var requestCount: Int = mockWebServer.getRequestCount()
-    requestCount = mockWebServer.requestCount
+    var requestCount: Int = mockWebServer.requestCount
     mockWebServer.enqueue(MockResponse())
     mockWebServer.start()
     mockWebServer.start(0)
@@ -766,10 +764,10 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun multipartBody() {
     val multipartBody: MultipartBody = MultipartBody.Builder().build()
-    val type: MediaType = multipartBody.type()
-    val boundary: String = multipartBody.boundary()
-    val size: Int = multipartBody.size()
-    val parts: List<MultipartBody.Part> = multipartBody.parts()
+    val type: MediaType = multipartBody.type
+    val boundary: String = multipartBody.boundary
+    val size: Int = multipartBody.size
+    val parts: List<MultipartBody.Part> = multipartBody.parts
     val part: MultipartBody.Part = multipartBody.part(0)
     val contentType: MediaType? = multipartBody.contentType()
     val contentLength: Long = multipartBody.contentLength()
@@ -785,13 +783,13 @@ class KotlinSourceCompatibilityTest {
   fun multipartBodyPart() {
     val requestBody: RequestBody = RequestBody.create(null, "")
     var part: MultipartBody.Part = MultipartBody.Part.create(null, requestBody)
-    part = MultipartBody.Part.create(Headers.of(), requestBody)
+    part = MultipartBody.Part.create(headersOf(), requestBody)
     part = MultipartBody.Part.create(requestBody)
     part = MultipartBody.Part.createFormData("", "")
     part = MultipartBody.Part.createFormData("", "", requestBody)
     part = MultipartBody.Part.createFormData("", null, requestBody)
-    val headers: Headers? = part.headers()
-    val body: RequestBody = part.body()
+    val headers: Headers? = part.headers
+    val body: RequestBody = part.body
   }
 
   @Test @Ignore
@@ -799,9 +797,9 @@ class KotlinSourceCompatibilityTest {
     val requestBody = RequestBody.create(null, "")
     var builder: MultipartBody.Builder = MultipartBody.Builder()
     builder = MultipartBody.Builder("")
-    builder = builder.setType(MediaType.get(""))
+    builder = builder.setType("".toMediaType())
     builder = builder.addPart(requestBody)
-    builder = builder.addPart(Headers.of(), requestBody)
+    builder = builder.addPart(headersOf(), requestBody)
     builder = builder.addPart(null, requestBody)
     builder = builder.addFormDataPart("", "")
     builder = builder.addFormDataPart("", "", requestBody)
@@ -813,32 +811,32 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun okHttpClient() {
     val client: OkHttpClient = OkHttpClient()
-    val dispatcher: Dispatcher = client.dispatcher()
-    val proxy: Proxy? = client.proxy()
-    val protocols: List<Protocol> = client.protocols()
-    val connectionSpecs: List<ConnectionSpec> = client.connectionSpecs()
-    val interceptors: List<Interceptor> = client.interceptors()
-    val networkInterceptors: List<Interceptor> = client.networkInterceptors()
-    val eventListenerFactory: EventListener.Factory = client.eventListenerFactory()
-    val proxySelector: ProxySelector = client.proxySelector()
-    val cookieJar: CookieJar = client.cookieJar()
-    val cache: Cache? = client.cache()
-    val socketFactory: SocketFactory = client.socketFactory()
-    val sslSocketFactory: SSLSocketFactory = client.sslSocketFactory()
-    val hostnameVerifier: HostnameVerifier = client.hostnameVerifier()
-    val certificatePinner: CertificatePinner = client.certificatePinner()
-    val proxyAuthenticator: Authenticator = client.proxyAuthenticator()
-    val authenticator: Authenticator = client.authenticator()
-    val connectionPool: ConnectionPool = client.connectionPool()
-    val dns: Dns = client.dns()
-    val followSslRedirects: Boolean = client.followSslRedirects()
-    val followRedirects: Boolean = client.followRedirects()
-    val retryOnConnectionFailure: Boolean = client.retryOnConnectionFailure()
-    val callTimeoutMillis: Int = client.callTimeoutMillis()
-    val connectTimeoutMillis: Int = client.connectTimeoutMillis()
-    val readTimeoutMillis: Int = client.readTimeoutMillis()
-    val writeTimeoutMillis: Int = client.writeTimeoutMillis()
-    val pingIntervalMillis: Int = client.pingIntervalMillis()
+    val dispatcher: Dispatcher = client.dispatcher
+    val proxy: Proxy? = client.proxy
+    val protocols: List<Protocol> = client.protocols
+    val connectionSpecs: List<ConnectionSpec> = client.connectionSpecs
+    val interceptors: List<Interceptor> = client.interceptors
+    val networkInterceptors: List<Interceptor> = client.networkInterceptors
+    val eventListenerFactory: EventListener.Factory = client.eventListenerFactory
+    val proxySelector: ProxySelector = client.proxySelector
+    val cookieJar: CookieJar = client.cookieJar
+    val cache: Cache? = client.cache
+    val socketFactory: SocketFactory = client.socketFactory
+    val sslSocketFactory: SSLSocketFactory = client.sslSocketFactory
+    val hostnameVerifier: HostnameVerifier = client.hostnameVerifier
+    val certificatePinner: CertificatePinner = client.certificatePinner
+    val proxyAuthenticator: Authenticator = client.proxyAuthenticator
+    val authenticator: Authenticator = client.authenticator
+    val connectionPool: ConnectionPool = client.connectionPool
+    val dns: Dns = client.dns
+    val followSslRedirects: Boolean = client.followSslRedirects
+    val followRedirects: Boolean = client.followRedirects
+    val retryOnConnectionFailure: Boolean = client.retryOnConnectionFailure
+    val callTimeoutMillis: Int = client.callTimeoutMillis
+    val connectTimeoutMillis: Int = client.connectTimeoutMillis
+    val readTimeoutMillis: Int = client.readTimeoutMillis
+    val writeTimeoutMillis: Int = client.writeTimeoutMillis
+    val pingIntervalMillis: Int = client.pingIntervalMillis
     val call: Call = client.newCall(Request.Builder().build())
     val webSocket: WebSocket = client.newWebSocket(
         Request.Builder().build(),
@@ -866,9 +864,8 @@ class KotlinSourceCompatibilityTest {
     builder = builder.cache(Cache(File("/cache/"), Integer.MAX_VALUE.toLong()))
     builder = builder.dns(Dns.SYSTEM)
     builder = builder.socketFactory(SocketFactory.getDefault())
-    builder = builder.sslSocketFactory(localhost().sslSocketFactory(), localhost().trustManager())
+    builder = builder.sslSocketFactory(localhost().sslSocketFactory(), localhost().trustManager)
     builder = builder.hostnameVerifier(newHostnameVerifier())
-    builder = builder.hostnameVerifier { hostname: String, session: SSLSession -> false }
     builder = builder.certificatePinner(CertificatePinner.DEFAULT)
     builder = builder.authenticator(Authenticator.NONE)
     builder = builder.proxyAuthenticator(Authenticator.NONE)
@@ -883,18 +880,15 @@ class KotlinSourceCompatibilityTest {
     builder = builder.addInterceptor(object : Interceptor {
       override fun intercept(chain: Interceptor.Chain): Response = TODO()
     })
-    builder = builder.addInterceptor { it: Interceptor.Chain -> TODO() }
     val networkInterceptors: List<Interceptor> = builder.networkInterceptors()
     builder = builder.addNetworkInterceptor(object : Interceptor {
       override fun intercept(chain: Interceptor.Chain): Response = TODO()
     })
-    builder = builder.addNetworkInterceptor { it: Interceptor.Chain -> TODO() }
     builder = builder.eventListener(EventListener.NONE)
     builder = builder.eventListenerFactory(object : EventListener.Factory {
       override fun create(call: Call): EventListener = TODO()
     })
     builder = builder.eventListenerFactory(LoggingEventListener.Factory { s -> TODO() })
-    builder = builder.eventListenerFactory { it: Call -> TODO() }
     val client: OkHttpClient = builder.build()
   }
 
@@ -916,11 +910,11 @@ class KotlinSourceCompatibilityTest {
 
   @Test @Ignore
   fun pushPromise() {
-    val pushPromise: PushPromise = PushPromise("", "", Headers.of(), MockResponse())
-    val method: String = pushPromise.method()
-    val path: String = pushPromise.path()
-    val headers: Headers = pushPromise.headers()
-    val response: MockResponse = pushPromise.response()
+    val pushPromise: PushPromise = PushPromise("", "", headersOf(), MockResponse())
+    val method: String = pushPromise.method
+    val path: String = pushPromise.path
+    val headers: Headers = pushPromise.headers
+    val response: MockResponse = pushPromise.response
   }
 
   @Test @Ignore
@@ -935,7 +929,7 @@ class KotlinSourceCompatibilityTest {
     }
     queueDispatcher = QueueDispatcher()
     var mockResponse: MockResponse = queueDispatcher.dispatch(
-        RecordedRequest("", Headers.of(), listOf(), 0L, Buffer(), 0, Socket()))
+        RecordedRequest("", headersOf(), listOf(), 0L, Buffer(), 0, Socket()))
     mockResponse = queueDispatcher.peek()
     queueDispatcher.enqueueResponse(MockResponse())
     queueDispatcher.shutdown()
@@ -946,8 +940,8 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun recordedRequest() {
     var recordedRequest: RecordedRequest = RecordedRequest(
-        "", Headers.of(), listOf(), 0L, Buffer(), 0, Socket())
-    recordedRequest = RecordedRequest("", Headers.of(), listOf(), 0L, Buffer(), 0, Socket())
+        "", headersOf(), listOf(), 0L, Buffer(), 0, Socket())
+    recordedRequest = RecordedRequest("", headersOf(), listOf(), 0L, Buffer(), 0, Socket())
     var requestUrl: HttpUrl? = recordedRequest.requestUrl
     var requestLine: String = recordedRequest.requestLine
     var method: String? = recordedRequest.method
@@ -957,39 +951,51 @@ class KotlinSourceCompatibilityTest {
     var chunkSizes: List<Int> = recordedRequest.chunkSizes
     var bodySize: Long = recordedRequest.bodySize
     var body: Buffer = recordedRequest.body
-    var utf8Body: String = recordedRequest.utf8Body
+    var utf8Body: String = recordedRequest.body.readUtf8()
     var sequenceNumber: Int = recordedRequest.sequenceNumber
     var tlsVersion: TlsVersion? = recordedRequest.tlsVersion
     var handshake: Handshake? = recordedRequest.handshake
+    requestUrl = recordedRequest.requestUrl
+    requestLine = recordedRequest.requestLine
+    method = recordedRequest.method
+    path = recordedRequest.path
+    headers = recordedRequest.headers
+    chunkSizes = recordedRequest.chunkSizes
+    bodySize = recordedRequest.bodySize
+    body = recordedRequest.body
+    utf8Body = recordedRequest.body.readUtf8()
+    sequenceNumber = recordedRequest.sequenceNumber
+    tlsVersion = recordedRequest.tlsVersion
+    handshake = recordedRequest.handshake
   }
 
   @Test @Ignore
   fun request() {
     val request: Request = Request.Builder().build()
     val isHttps: Boolean = request.isHttps
-    val url: HttpUrl = request.url()
-    val method: String = request.method()
-    val headers: Headers = request.headers()
+    val url: HttpUrl = request.url
+    val method: String = request.method
+    val headers: Headers = request.headers
     val header: String? = request.header("")
     val headersForName: List<String> = request.headers("")
-    val body: RequestBody? = request.body()
+    val body: RequestBody? = request.body
     var tag: Any? = request.tag()
     tag = request.tag(Any::class.java)
     val builder: Request.Builder = request.newBuilder()
-    val cacheControl: CacheControl = request.cacheControl()
+    val cacheControl: CacheControl = request.cacheControl
   }
 
   @Test @Ignore
   fun requestBuilder() {
     val requestBody = RequestBody.create(null, "")
     var builder = Request.Builder()
-    builder = builder.url(HttpUrl.get(""))
+    builder = builder.url("".toHttpUrl())
     builder = builder.url("")
     builder = builder.url(URL(""))
     builder = builder.header("", "")
     builder = builder.addHeader("", "")
     builder = builder.removeHeader("")
-    builder = builder.headers(Headers.of())
+    builder = builder.headers(headersOf())
     builder = builder.cacheControl(CacheControl.FORCE_CACHE)
     builder = builder.get()
     builder = builder.head()
@@ -1017,41 +1023,41 @@ class KotlinSourceCompatibilityTest {
       override fun writeTo(sink: BufferedSink) = TODO()
     }
     requestBody = RequestBody.create(null, "")
-    requestBody = RequestBody.create(MediaType.parse(""), "")
+    requestBody = RequestBody.create("".toMediaTypeOrNull(), "")
     requestBody = RequestBody.create(null, ByteString.EMPTY)
-    requestBody = RequestBody.create(MediaType.parse(""), ByteString.EMPTY)
+    requestBody = RequestBody.create("".toMediaTypeOrNull(), ByteString.EMPTY)
     requestBody = RequestBody.create(null, byteArrayOf(0, 1))
-    requestBody = RequestBody.create(MediaType.parse(""), byteArrayOf(0, 1))
+    requestBody = RequestBody.create("".toMediaTypeOrNull(), byteArrayOf(0, 1))
     requestBody = RequestBody.create(null, byteArrayOf(0, 1), 0, 2)
-    requestBody = RequestBody.create(MediaType.parse(""), byteArrayOf(0, 1), 0, 2)
+    requestBody = RequestBody.create("".toMediaTypeOrNull(), byteArrayOf(0, 1), 0, 2)
     requestBody = RequestBody.create(null, File(""))
-    requestBody = RequestBody.create(MediaType.parse(""), File(""))
+    requestBody = RequestBody.create("".toMediaTypeOrNull(), File(""))
   }
 
   @Test @Ignore
   fun response() {
     val response: Response = Response.Builder().build()
-    val request: Request = response.request()
-    val protocol: Protocol = response.protocol()
-    val code: Int = response.code()
+    val request: Request = response.request
+    val protocol: Protocol = response.protocol
+    val code: Int = response.code
     val successful: Boolean = response.isSuccessful
-    val message: String = response.message()
-    val handshake: Handshake? = response.handshake()
+    val message: String = response.message
+    val handshake: Handshake? = response.handshake
     val headersForName: List<String> = response.headers("")
     val header: String? = response.header("")
-    val headers: Headers = response.headers()
+    val headers: Headers = response.headers
     val trailers: Headers = response.trailers()
     val peekBody: ResponseBody = response.peekBody(0L)
-    val body: ResponseBody? = response.body()
+    val body: ResponseBody? = response.body
     val builder: Response.Builder = response.newBuilder()
     val redirect: Boolean = response.isRedirect
-    val networkResponse: Response? = response.networkResponse()
-    val cacheResponse: Response? = response.cacheResponse()
-    val priorResponse: Response? = response.priorResponse()
+    val networkResponse: Response? = response.networkResponse
+    val cacheResponse: Response? = response.cacheResponse
+    val priorResponse: Response? = response.priorResponse
     val challenges: List<Challenge> = response.challenges()
-    val cacheControl: CacheControl = response.cacheControl()
-    val sentRequestAtMillis: Long = response.sentRequestAtMillis()
-    val receivedResponseAtMillis: Long = response.receivedResponseAtMillis()
+    val cacheControl: CacheControl = response.cacheControl
+    val sentRequestAtMillis: Long = response.sentRequestAtMillis
+    val receivedResponseAtMillis: Long = response.receivedResponseAtMillis
   }
 
   @Test @Ignore
@@ -1071,7 +1077,7 @@ class KotlinSourceCompatibilityTest {
     builder = builder.header("", "")
     builder = builder.addHeader("", "")
     builder = builder.removeHeader("")
-    builder = builder.headers(Headers.of())
+    builder = builder.headers(headersOf())
     builder = builder.body(ResponseBody.create(null, ""))
     builder = builder.body(null)
     builder = builder.networkResponse(Response.Builder().build())
@@ -1099,22 +1105,22 @@ class KotlinSourceCompatibilityTest {
     val charStream = responseBody.charStream()
     val string = responseBody.string()
     responseBody.close()
-    responseBody = ResponseBody.create(MediaType.get(""), "")
+    responseBody = ResponseBody.create("".toMediaType(), "")
     responseBody = ResponseBody.create(null, "")
-    responseBody = ResponseBody.create(MediaType.get(""), ByteString.EMPTY)
+    responseBody = ResponseBody.create("".toMediaType(), ByteString.EMPTY)
     responseBody = ResponseBody.create(null, ByteString.EMPTY)
-    responseBody = ResponseBody.create(MediaType.get(""), byteArrayOf(0, 1))
+    responseBody = ResponseBody.create("".toMediaType(), byteArrayOf(0, 1))
     responseBody = ResponseBody.create(null, byteArrayOf(0, 1))
-    responseBody = ResponseBody.create(MediaType.get(""), 0L, Buffer())
+    responseBody = ResponseBody.create("".toMediaType(), 0L, Buffer())
     responseBody = ResponseBody.create(null, 0L, Buffer())
   }
 
   @Test @Ignore
   fun route() {
     val route: Route = newRoute()
-    val address: Address = route.address()
-    val proxy: Proxy = route.proxy()
-    val inetSocketAddress: InetSocketAddress = route.socketAddress()
+    val address: Address = route.address
+    val proxy: Proxy = route.proxy
+    val inetSocketAddress: InetSocketAddress = route.socketAddress
     val requiresTunnel: Boolean = route.requiresTunnel()
   }
 
@@ -1126,7 +1132,7 @@ class KotlinSourceCompatibilityTest {
   @Test @Ignore
   fun tlsVersion() {
     var tlsVersion: TlsVersion = TlsVersion.TLS_1_3
-    val javaName: String = tlsVersion.javaName()
+    val javaName: String = tlsVersion.javaName
     tlsVersion = TlsVersion.forJavaName("")
   }
 

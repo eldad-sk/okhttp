@@ -98,13 +98,6 @@ class MockResponse : Cloneable {
     return result
   }
 
-  @JvmName("-deprecated_getStatus")
-  @Deprecated(
-      message = "moved to var",
-      replaceWith = ReplaceWith(expression = "status"),
-      level = DeprecationLevel.ERROR)
-  fun getStatus(): String = status
-
   @Deprecated(
       message = "moved to var.  Replace setStatus(...) with status(...) to fix Java",
       replaceWith = ReplaceWith(expression = "apply { this.status = status }"),
@@ -212,38 +205,17 @@ class MockResponse : Cloneable {
   fun setChunkedBody(body: String, maxChunkSize: Int): MockResponse =
     setChunkedBody(Buffer().writeUtf8(body), maxChunkSize)
 
-  @JvmName("-deprecated_getHeaders")
-  @Deprecated(
-      message = "moved to var",
-      replaceWith = ReplaceWith(expression = "headers"),
-      level = DeprecationLevel.ERROR)
-  fun getHeaders(): Headers = headers
-
   @Deprecated(
       message = "moved to var. Replace setHeaders(...) with headers(...) to fix Java",
       replaceWith = ReplaceWith(expression = "apply { this.headers = headers }"),
       level = DeprecationLevel.WARNING)
   fun setHeaders(headers: Headers) = apply { this.headers = headers }
 
-  @JvmName("-deprecated_getTrailers")
-  @Deprecated(
-      message = "moved to var",
-      replaceWith = ReplaceWith(expression = "trailers"),
-      level = DeprecationLevel.ERROR)
-  fun getTrailers(): Headers = trailers
-
   @Deprecated(
       message = "moved to var. Replace setTrailers(...) with trailers(...) to fix Java",
       replaceWith = ReplaceWith(expression = "apply { this.trailers = trailers }"),
       level = DeprecationLevel.WARNING)
   fun setTrailers(trailers: Headers) = apply { this.trailers = trailers }
-
-  @JvmName("-deprecated_getSocketPolicy")
-  @Deprecated(
-      message = "moved to var",
-      replaceWith = ReplaceWith(expression = "socketPolicy"),
-      level = DeprecationLevel.ERROR)
-  fun getSocketPolicy() = socketPolicy
 
   @Deprecated(
       message = "moved to var. Replace setSocketPolicy(...) with socketPolicy(...) to fix Java",
@@ -252,13 +224,6 @@ class MockResponse : Cloneable {
   fun setSocketPolicy(socketPolicy: SocketPolicy) = apply {
     this.socketPolicy = socketPolicy
   }
-
-  @JvmName("-deprecated_getHttp2ErrorCode")
-  @Deprecated(
-      message = "moved to var",
-      replaceWith = ReplaceWith(expression = "http2ErrorCode"),
-      level = DeprecationLevel.ERROR)
-  fun getHttp2ErrorCode() = http2ErrorCode
 
   @Deprecated(
       message = "moved to var. Replace setHttp2ErrorCode(...) with http2ErrorCode(...) to fix Java",

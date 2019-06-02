@@ -54,20 +54,6 @@ class MediaType private constructor(
     }
   }
 
-  @JvmName("-deprecated_type")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "type"),
-      level = DeprecationLevel.ERROR)
-  fun type() = type
-
-  @JvmName("-deprecated_subtype")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "subtype"),
-      level = DeprecationLevel.ERROR)
-  fun subtype() = subtype
-
   /**
    * Returns the encoded media type, like "text/plain; charset=utf-8", appropriate for use in a
    * Content-Type header.
@@ -144,23 +130,5 @@ class MediaType private constructor(
         null
       }
     }
-
-    @JvmName("-deprecated_get")
-    @Deprecated(
-        message = "moved to extension function",
-        replaceWith = ReplaceWith(
-            expression = "mediaType.toMediaType()",
-            imports = ["okhttp3.MediaType.Companion.toMediaType"]),
-        level = DeprecationLevel.ERROR)
-    fun get(mediaType: String): MediaType = mediaType.toMediaType()
-
-    @JvmName("-deprecated_parse")
-    @Deprecated(
-        message = "moved to extension function",
-        replaceWith = ReplaceWith(
-            expression = "mediaType.toMediaTypeOrNull()",
-            imports = ["okhttp3.MediaType.Companion.toMediaTypeOrNull"]),
-        level = DeprecationLevel.ERROR)
-    fun parse(mediaType: String): MediaType? = mediaType.toMediaTypeOrNull()
   }
 }

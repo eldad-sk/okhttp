@@ -197,28 +197,10 @@ class MockWebServer : ExternalResource(), Closeable {
     }
   }
 
-  @JvmName("-deprecated_port")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "port"),
-      level = DeprecationLevel.ERROR)
-  fun getPort(): Int = port
-
   fun toProxyAddress(): Proxy {
     before()
     val address = InetSocketAddress(inetSocketAddress!!.address.canonicalHostName, port)
     return Proxy(Proxy.Type.HTTP, address)
-  }
-
-  @JvmName("-deprecated_serverSocketFactory")
-  @Deprecated(
-      message = "moved to var",
-      replaceWith = ReplaceWith(
-          expression = "run { this.serverSocketFactory = serverSocketFactory }"
-      ),
-      level = DeprecationLevel.ERROR)
-  fun setServerSocketFactory(serverSocketFactory: ServerSocketFactory) = run {
-    this.serverSocketFactory = serverSocketFactory
   }
 
   /**
@@ -234,40 +216,6 @@ class MockWebServer : ExternalResource(), Closeable {
         .build()
         .resolve(path)!!
   }
-
-  @JvmName("-deprecated_bodyLimit")
-  @Deprecated(
-      message = "moved to var",
-      replaceWith = ReplaceWith(
-          expression = "run { this.bodyLimit = bodyLimit }"
-      ),
-      level = DeprecationLevel.ERROR)
-  fun setBodyLimit(bodyLimit: Long) = run { this.bodyLimit = bodyLimit }
-
-  @JvmName("-deprecated_protocolNegotiationEnabled")
-  @Deprecated(
-      message = "moved to var",
-      replaceWith = ReplaceWith(
-          expression = "run { this.protocolNegotiationEnabled = protocolNegotiationEnabled }"
-      ),
-      level = DeprecationLevel.ERROR)
-  fun setProtocolNegotiationEnabled(protocolNegotiationEnabled: Boolean) = run {
-    this.protocolNegotiationEnabled = protocolNegotiationEnabled
-  }
-
-  @JvmName("-deprecated_protocols")
-  @Deprecated(
-      message = "moved to var",
-      replaceWith = ReplaceWith(expression = "run { this.protocols = protocols }"),
-      level = DeprecationLevel.ERROR)
-  fun setProtocols(protocols: List<Protocol>) = run { this.protocols = protocols }
-
-  @JvmName("-deprecated_protocols")
-  @Deprecated(
-      message = "moved to var",
-      replaceWith = ReplaceWith(expression = "protocols"),
-      level = DeprecationLevel.ERROR)
-  fun protocols(): List<Protocol> = protocols
 
   /**
    * Serve requests with HTTPS rather than otherwise.
@@ -330,13 +278,6 @@ class MockWebServer : ExternalResource(), Closeable {
    */
   @Throws(InterruptedException::class)
   fun takeRequest(timeout: Long, unit: TimeUnit): RecordedRequest = requestQueue.poll(timeout, unit)
-
-  @JvmName("-deprecated_requestCount")
-  @Deprecated(
-      message = "moved to val",
-      replaceWith = ReplaceWith(expression = "requestCount"),
-      level = DeprecationLevel.ERROR)
-  fun getRequestCount(): Int = requestCount
 
   /**
    * Scripts [response] to be returned to a request made in sequence. The first request is
@@ -764,7 +705,7 @@ class MockWebServer : ExternalResource(), Closeable {
     val fancyResponse = Response.Builder()
         .code(Integer.parseInt(statusParts[1]))
         .message(statusParts[2])
-        .headers(response.getHeaders())
+        .headers(response.headers)
         .request(fancyRequest)
         .protocol(Protocol.HTTP_1_1)
         .build()
@@ -795,14 +736,14 @@ class MockWebServer : ExternalResource(), Closeable {
     sink.writeUtf8(response.status)
     sink.writeUtf8("\r\n")
 
-    writeHeaders(sink, response.getHeaders())
+    writeHeaders(sink, response.headers)
 
     val body = response.getBody() ?: return
     sleepIfDelayed(response.getBodyDelay(TimeUnit.MILLISECONDS))
     throttledTransfer(response, socket, body, sink, body.size, false)
 
-    if ("chunked".equals(response.getHeaders()["Transfer-Encoding"], ignoreCase = true)) {
-      writeHeaders(sink, response.getTrailers())
+    if ("chunked".equals(response.headers["Transfer-Encoding"], ignoreCase = true)) {
+      writeHeaders(sink, response.trailers)
     }
   }
 
@@ -1032,11 +973,11 @@ class MockWebServer : ExternalResource(), Closeable {
       }
       // TODO: constants for well-known header names.
       http2Headers.add(Header(Header.RESPONSE_STATUS, statusParts[1]))
-      val headers = response.getHeaders()
+      val headers = response.headers
       for ((name, value) in headers) {
         http2Headers.add(Header(name, value))
       }
-      val trailers = response.getTrailers()
+      val trailers = response.trailers
 
       sleepIfDelayed(response.getHeadersDelay(TimeUnit.MILLISECONDS))
 
